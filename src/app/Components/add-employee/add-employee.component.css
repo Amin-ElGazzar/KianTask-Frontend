@@ -1,0 +1,5 @@
+.custom-checkbox {
+    width: 20px;   /* Set your desired width */
+    height: 20px;  /* Set your desired height */
+    cursor: pointer;  /* Change cursor on hover */
+}

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ToastService } from './Services/toast.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'KianTask';
+
+  constructor(private toastService: ToastService) {
+    
+  }
+   
+  showToastr(action: string, state: string): void {
+    const message = `${action} Department ${state}`;
+    const severity = state === 'done' ? 'success' : 'error';
+
+    this.toastService.showToast(severity, 'Done', message);
+  }
 }

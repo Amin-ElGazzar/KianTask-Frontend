@@ -1,0 +1,75 @@
+<div class="container my-5">
+    <div class="card shadow">
+      <div class="card-header bg-gradient-primary text-dark">
+        <div class="d-flex justify-content-center align-items-center">
+          <div>
+            <h1 class="card-title display-6 text-uppercase mb-2 p-4">Employee Management</h1>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card-body mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="w-100">
+            <button type="button" class="btn btn-primary px-2 my-3" [routerLink]="['/addEmployee','']">
+              <i class="bi bi-plus"></i> Add Employee
+            </button>
+          </div>
+        </div>
+  
+        <div class="table-responsive">
+          <p-table #dt [value]="employees | search:searchValue" [paginator]="true" [rows]="rows"
+            [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
+            styleClass="p-datatable-gridlines p-datatable-striped p-datatable-lg"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} employees">
+  
+            <ng-template pTemplate="caption">
+              <div class="d-flex">
+                <div class="w-100">
+                  <span class="ro">Show </span>
+                  <p-dropdown [options]="rowsPerPageOptions" placeholder="Rows per page" (onChange)="updateRows($event)">
+                  </p-dropdown>
+                  <span class="ro"> Employees</span>
+                </div>
+                <input #search1 class="search" type="text" (keyup)="onSearch(search1.value)" placeholder="Search...">
+              </div>
+            </ng-template>
+  
+            <ng-template  pTemplate="header" let-i="rowIndex" let-e>
+              <tr>
+                <th>#</th>
+                <th pSortableColumn="firstName">First Name<p-sortIcon field="firstName"></p-sortIcon></th>
+                <th pSortableColumn="lastName">Last Name<p-sortIcon field="lastName"></p-sortIcon></th>
+                <th pSortableColumn="address">Address<p-sortIcon field="address"></p-sortIcon></th>
+                <th pSortableColumn="salary">Salary<p-sortIcon field="salary"></p-sortIcon></th>
+                <th>Active</th>
+                <th>Actions</th>
+              </tr>
+            </ng-template>
+  
+            <ng-template pTemplate="body" let-e let-i="rowIndex">
+              <tr>
+                <td>{{ i + 1 }}</td>
+                <td>{{ e.firstName }}</td>
+                <td>{{ e.lastName }}</td>
+                <td>{{ e.address }}</td>
+                <td>{{ e.salary | currency: 'USD':'symbol':'1.2-2' }}</td>
+                
+                <!-- Checkbox for isActive -->
+                <td>
+                  <input type="checkbox" class="custom-checkbox" [(ngModel)]="e.isActive" (change)="updateActiveStatus(e)" />
+                </td>
+  
+                <td class="table-action-icons ">
+                  <button class="btn btn-secondary mx-2 px-4"  [routerLink]="['/addEmployee', e.id]">Edit</button>
+                  <button class="btn  btn-danger mx-2" (click)="deleteEmp(e.id)">Remove</button>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  
